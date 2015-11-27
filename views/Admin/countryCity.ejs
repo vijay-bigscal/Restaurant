@@ -1,0 +1,25 @@
+<% include header %>
+<div>
+	<form action="/insertCountry" method="post">
+		<fieldset>
+			<legend>Country</legend>
+			<b> Country Name : </b>
+			<input type="text" name="countryname" id="countryname" required /><br/><br/>
+			<input type="submit" name="btnCountry" id="btnCountry" value="Save" />
+		</fieldset>
+	</form>
+	<form action="/insertCity" method="post">
+		<fieldset>
+			<legend>City</legend>
+			<b> Country : </b>
+			<select id="country" name="country">
+				<% countryList.forEach(function(data){ %>
+			    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
+			    <%  }) %>
+			</select><br/><br/>
+			<b> City Name : </b>
+			<input type="text" name="cityname" id="cityname" required /><br/><br/>
+			<input type="submit" name="btnCity" id="btnCity" value="Save" />
+		</fieldset>
+	</form>
+</div>

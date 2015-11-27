@@ -1,0 +1,162 @@
+<% include header %>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		changeCountry();
+	});
+	function changeCountry(){
+		var countryID = $("#country").val();
+		$.getJSON('/getCitiesByCountryID?CountryID=' + countryID , function(res){
+			var cities = res.result;
+			var cityList = "";
+			cities.forEach(function(data){
+				cityList += "<option value='" + data._id + "'> " + data.CityName + "</option>";
+			})
+			$("select#city").html(cityList);
+		});
+		changeRestaurant();
+		//fillMenus();
+	}
+	function changeCity(){
+		changeRestaurant();
+		//fillMenus();
+	}
+	function changeRestaurantType(){
+		changeRestaurant();
+		//fillMenus();
+	}
+	function changeRestaurant()
+	{
+		var countryID = $("#country").val();
+		var cityID = $("#city").val();
+		var restaurantTypeID = $("#restaurantType").val();
+		//alert("Country : " + countryID + " City : " + cityID + " restaurantType : " + restaurantTypeID);
+		$.getJSON('/getRestaurantByIDs?CountryID=' + countryID + '&CityID=' + cityID + '&RestaurantTypeID=' + restaurantTypeID, function(res){
+			var restaurants = res.result;
+			var restaurantList = "";
+			restaurants.forEach(function(data){
+				restaurantList += "<option value='" + data._id + "'> " + data.Name + "</option>";
+			})
+			$("select#restaurant").html(restaurantList);
+		});
+		fillMenus();
+	}
+	function changeDishType(){
+		fillMenus();
+	}
+	function fillMenus(){
+		var restaurantID = $("#restaurant").val();
+		var dishTypeID = $("#dishtype").val();
+		$.getJSON('/getMenusByRestaurantID?RestaurantID=' + restaurantID + "&DishTypeID=" + dishTypeID, function(res){
+			var menus = res.result;
+			var menuList = "";
+			menus.forEach(function(data){
+				menuList += "<option value='" + data._id + "'> " + data.DishName + "</option>";
+			})
+			$("select#menu").html(menuList);
+			getMenuDetails();
+		});
+	}
+	function getMenuDetails(){
+		var menuID = $("#menu").val();
+		var restaurantID = $("#restaurant").val();
+		var dishTypeID = $("#dishtype").val();
+		if(menuID == null){
+			$("#DishName").html("");
+			$("#Ingredients").html("");
+			$("#Details").html("");
+			$("#Spices").html("");
+			$("#Price").html("");
+		}else{
+			$.getJSON('/getMenusByRestaurantID?RestaurantID=' + restaurantID + "&DishTypeID=" + dishTypeID, function(res){
+				var menus = res.result;
+				menus.forEach(function(data){
+					if(data._id == menuID){
+						//alert("Matched !!!");
+						$("#DishName").html(data.DishName);
+						$("#Ingredients").html(data.Ingredients);
+						$("#Details").html(data.Details);
+						$("#Spices").html(data.Spices);
+						$("#Price").html(data.Price);
+					}
+				})
+			});
+		}
+	}
+
+</script>
+
+<div style="align:'center';">
+	<div class="col-lg-12 col-md-12">
+
+	<form action="#" method="post">
+		<b>Country : </b>
+		<select id="country" name="country" onchange="changeCountry()">
+			<% countries.forEach(function(data){ %>
+		    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
+		    <%  }) %>
+		</select>
+
+		<b>City : </b>
+		<select id="city" name="city" onchange="changeCity()">
+			<% cities.forEach(function(data){ %>
+		    	<option value="<%= data._id %>"> <%= data.CityName %> </option>
+		    <%  }) %>
+		</select>
+
+		<b>Restaurant Type : </b>
+		<select id="restaurantType" name="restaurantType" onchange="changeRestaurantType()">
+			<% restaurantTypeList.forEach(function(data){ %>
+		    	<option value="<%= data._id %>"> <%= data.Type %> </option>
+		    <%  }) %>
+		</select>
+		
+		<b>Restaurant : </b>
+		<select id="restaurant" name="restaurant" onchange="changeRestaurant()">
+			<% restaurantList.forEach(function(data){ %>
+		    	<option value="<%= data._id %>"> <%= data.Name %> </option>
+		    <%  }) %>
+		</select>
+
+		<b>Dish Type : </b>
+		<select id="dishtype" name="dishtype" onchange="changeDishType()">
+			<% dishList.forEach(function(data){ %>
+		    	<option value="<%= data._id %>"> <%= data.Type %> </option>
+		    <%  }) %>
+		</select>
+
+		<b>Menu : </b>
+		<select id="menu" name="menu">
+			<% menuList.forEach(function(data){ %>
+		    	<option value="<%= data._id %>"> <%= data.DishName %> </option>
+		    <%  }) %>
+		</select><br/>
+		<div>
+			Quantity : <input type="number" name="qty" id="qty" />
+		</div>
+		<table>
+			<tr>
+				<td>Dish Name : </td>
+				<td id="DishName"></td>
+			</tr>
+			<tr>
+				<td>Ingredients : </td>
+				<td id="Ingredients"></td>
+			</tr>
+			<tr>
+				<td>Details : </td>
+				<td id="Details" ></td>
+			</tr>
+			<tr>
+				<td>Spices : </td>
+				<td id="Spices" ></td>
+			</tr>
+			<tr>
+				<td>Price : </td>
+				<td id="Price" name="price" ></td>
+			</tr>
+		</table>
+		
+	</form>
+	</div>
+</div>

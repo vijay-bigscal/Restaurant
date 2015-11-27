@@ -1,0 +1,162 @@
+<% include header %>
+<script type="text/javascript">
+	function readURLLogo(input) {
+		if (input.files && input.files[0]) {
+	            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#restaurantImg')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function readURLDishImg(input) {
+		if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+
+	        reader.onload = function (e) {
+	            $('#dishImg')
+	                .attr('src', e.target.result)
+	                .width(150)
+	                .height(200);
+	        };
+
+	        reader.readAsDataURL(input.files[0]);
+	    }
+    }
+    function picCheck(){
+    	if (document.getElementById('Pic').checked) {
+	        document.getElementById('dishFile').style.display = 'block';
+	        document.getElementById('dishImg').style.display = 'block';
+	    } else {
+	        document.getElementById('dishFile').style.display = 'none';
+	        document.getElementById('dishImg').style.display = 'none';
+	        $('#dishFile').val("");
+	    }
+    }
+</script>
+<style type="text/css">
+	img {
+	    max-width: 100%;
+	    height: 20% !important;
+	}
+
+	.item {
+	    width: 120px !important;
+	    min-height: 120px !important;
+	    float: left;
+	    margin: 3px;
+	    padding: 3px;
+	}
+</style>
+<main>
+	<div class="container">
+	<form action="/insertRestaurant" method="post">
+	<fieldset>
+		<legend>
+			Restaurant Details
+		</legend>
+		
+			<div class="row">
+				
+				<div class="col-lg-2"><input type="file" id="logo" name="logo" onchange="readURLLogo(this);" required /></div>
+				<div class="col-lg-2"><b>Name</b><br/><input type="text" id="resname" name="resname" required /></div>
+				<div class="col-lg-2"><b>Address</b><br/><textarea rows="2" cols="15" id="address" name="address" required ></textarea></div>
+				<div class="col-lg-2"><b>Country</b><br/>
+					<select id="country" name="country">
+						<% countries.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+				<div class="col-lg-2"><b>City</b><br/>
+					<select id="city" name="city">
+						<% cities.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.CityName %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+				<div class="col-lg-2"><b>Restaurant Type</b><br/>
+					<select id="restaurantType" name="restaurantType">
+						<% restaurantTypes.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.Type %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-2"><img id="restaurantImg" src="#" alt="your image" class="item" /></div>
+				<div class="col-lg-4">
+					<b>Opening days from 9:00 AM to 11:00 PM</b><br/>
+					<input type="checkbox" name="days" value="sunday" checked />Sunday <br/>
+					<input type="checkbox" name="days" value="monday" />Monday <br/>
+					<input type="checkbox" name="days" value="tuesday" />Tuesday <br/>
+					<input type="checkbox" name="days" value="wednesday" />Wednesday <br/>
+					<input type="checkbox" name="days" value="thursday" />Thursday <br/>
+					<input type="checkbox" name="days" value="friday" />Friday <br/>
+					<input type="checkbox" name="days" value="saturday" />Saturday 
+				</div>
+				<div class="col-lg-2">
+					<b>Phone</b>
+					<input type="tel" id="phone" name="phone" required /><br/><br/>
+					<b>Call me now</b><br/>
+					<input type="radio" name="callme" value="1" checked />On <br/>
+					<input type="radio" name="callme" value="0" />Off<br/><br/>
+				</div>
+				<div class="col-lg-2"><b>Status</b><br/>
+					<input type="radio" name="status" value="1" checked />Take away <br/>
+					<input type="radio" name="status" value="2" />Delivery <br/>
+					<input type="radio" name="status" value="3" />Both
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12"><input type="submit" name="btnAddRestaurant" value="Add Restaurant" /></div>
+			</div>
+	</fieldset>
+	</form>
+	<form method="post" action="/insertMenu">
+	<fieldset>
+		<legend>
+			Menu
+		</legend>
+		<div class="row">
+			<div class="col-lg-2 col-md-2 col-sm-2">
+				<input type="radio" onchange="javascript:picCheck();" name="pic" id="Pic" value="yes" checked />Picture <br/>
+				<input type="radio" onchange="javascript:picCheck();" name="pic" id="NoPic" value="No" />No Picture <br/>
+				<input type="file" id="dishFile" name="dishFile" onchange="readURLDishImg(this);" />
+				<img src="#" id="dishImg" alt="your image" class="item" /> <br/><br/>
+				<input type="submit" name="btnAddMenu" value="Add Menu" />
+			</div>
+				<div class="col-lg-2"><b>Dish Name</b><br/><input type="text" id="dishname" name="dishname" required /></div>
+				<div class="col-lg-2"><b>Ingredients</b><br/><input type="text" id="ingredients" name="ingredients" required /></div>
+				<div class="col-lg-2"><b>Details</b><br/><input type="text" id="details" name="details" required /></div>
+				<div class="col-lg-2"><b>Spices</b><br/><input type="text" id="spices" name="spices" required /></div>
+				<div class="col-lg-2"><b>Price</b><br/><input type="number" id="price" name="price" required/></div>
+
+				<div class="col-lg-2"><b>Restaurants</b><br/>
+					<select id="restaurant" name="restaurant" required>
+						<% restaurantList.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.Name %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+				
+				<div class="col-lg-2"><b>Dish Type</b><br/>
+				<select id="dishtype" name="dishtype" required>
+					<% dishList.forEach(function(data){ %>
+				    	<option value="<%= data._id %>"> <%= data.Type %> </option>
+				    <%  }) %>
+				</select><br/></div>
+			</div>
+		</div>
+	</fieldset>
+	</form>
+	</div>
+</form>
+</div>
+</main>

@@ -1,0 +1,29 @@
+{
+	"RESTAURENT_ADD_SUCCESS":"Restaurant Added Successfully",
+	"RESTAURENT_EXISTS_MSG": "Restaurant Already Exist",
+	"RESTAURENT_NOT_EXIST" :"Restaurant does not exist",
+
+	"RESTAURANTTYPE_ADD_SUCCESS":"Restaurant type Added Successfully",
+	"RESTAURANTTYPE_EXISTS_MSG": "Restaurant type Already Exist",
+	"RESTAURANTTYPE_NOT_EXIST" : "Restaurant type does not exist",
+
+	"DISHTYPE_ADD_SUCCESS":"Dish type Added Successfully",
+	"DISHTYPE_EXISTS_MSG": "Dish type Already Exist",
+	"DISHTYPE_NOT_EXIST" :"Dish type does not exist",
+
+	"MENU_ADD_SUCCESS":"Menu Added Successfully",
+	"MENU_EXISTS_MSG": "Menu Already Exist",
+	"MENU_NOT_EXIST" :"Menu does not exist",
+
+	"EMAIL_EXISTS": "Email Already Exist",
+	"TRY_AGAIN":"Please Try Again",
+	"SERVICE_PROVIDER_REGISTER_SUSCESS": "Service Provider Registered Successfully",
+	"USER_REGISTER_SUCCESS" : "User Registered Successfully",
+	"USERNAME_PASSWORD_INCORRECT" : "Wrong Email-Id or Password",
+	"LOGIN_SUCCESS" : "Login Successfully",
+	"USER_UPDATE_SUCCESS" : "User Updated Successfully", 
+	"LOGOUT_SUCCESS" : "Logout Successfully",
+	
+	"ENTER_DATA_PROPERLY":"Please Enter Data Properly",
+	"NO_RECORD_EXIST": "No record exist"
+}
