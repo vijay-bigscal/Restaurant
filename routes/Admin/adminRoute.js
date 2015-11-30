@@ -6,6 +6,8 @@ var RESTAURANT_COLLECTION = models.restaurant;
 var DISHTYPE_COLLECTION = models.dishType;
 var MENU_COLLECTION = models.menu;
 var ADMINLOGIN_COLLECTION = models.adminlogin;
+var ORDER_COLLECTION = models.orders;
+var REVIEW_COLLECTION = models.review;
 
 var configuration = require('../../config/configuration');		//to import configuration file
 var message = require('../../config/message');					//to import message file
@@ -65,7 +67,6 @@ exports.getRestaurantTypeList = function(req , res){
 			json.status = "1";
 			json.result = restaurantType;
 			res.send(json);
-			//res.render('Admin/login',{ restaurantTypes : restaurantType});
 		}
 	})
 }
@@ -94,7 +95,6 @@ exports.insertRestaurantType = function(req , res){
 		}else{
 			res.redirect('/getRestaurantType');
 		}
-
 	});
 }
 
@@ -133,11 +133,7 @@ exports.getRestaurant = function(req , res){
 											json.result = TRY_AGAIN;
 											res.send(json);	
 									  	}else{
-									  		// countryList.forEach(function(data){
-									  		// 	console.log("Name : " + data.CountryName);
-									  		// })
-						  					res.render('Admin/restaurantMenu', { restaurantTypes : restaurantTypes, 
-						  					countries : countryList, cities : cityList, restaurantList : restaurantList, dishList : dishList});
+						  					res.render('Admin/restaurantMenu', { restaurantTypes : restaurantTypes, countries : countryList, cities : cityList, restaurantList : restaurantList, dishList : dishList});
 						  				}
 						  			});
 				  				}
@@ -148,7 +144,6 @@ exports.getRestaurant = function(req , res){
 			});
 		}
 	});
-	//console.log("City : " + cities.CityName);
 }
 
 /*
@@ -263,16 +258,7 @@ exports.getCountryCity = function(req , res){
 			json.result = TRY_AGAIN;
 			res.send(json);	
 	  	}else{
-			// var len = country.length;
-			// if (len != 0) {	
-			// 	// restauranttypes.forEach(function(restauranttype){		
-				// 	console.log("Restaurant : " + restauranttype);
-				// 	res.send(restauranttype);
-				// })
- 				res.render('Admin/countryCity', { countryList : country});
-			// }else{
-			// 	res.redirect('/getCountryCity');
-			// }
+			res.render('Admin/countryCity', { countryList : country});
 		}
 	});
 }

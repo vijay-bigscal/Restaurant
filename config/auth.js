@@ -5,6 +5,8 @@ module.exports = {
         'clientSecret'  : '133591129e5cce5f2e41a2df8d2fd437', // your App Secret
         'callbackURL'   : 'http://localhost:2550/auth/facebook/callback'
     }//,
+    /* below credentials for twitter and google authentication */
+
 
     // 'twitterAuth' : {
     //     'consumerKey'       : 'your-consumer-key-here',

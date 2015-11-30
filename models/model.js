@@ -38,7 +38,6 @@ exports.restaurantType = RestaurantType;
 
 /******* Start Restaurant  Model *********/
 
-
 var restaurant = new Schema({
 	Name : String,
 	Address : String,
@@ -101,7 +100,7 @@ exports.adminlogin = AdminLogin;
 
 /************ start Order model   ***************/
 
-var order = new Schema({
+var orders = new Schema({
 	Name : String,
 	Country_Id : Schema.ObjectId,
 	City_Id : Schema.ObjectId,
@@ -114,21 +113,35 @@ var order = new Schema({
 	TotalPrice : Number
 })
 
-var AdminLogin = mongoose.model('AdminLogin' , adminlogin);
-exports.adminlogin = AdminLogin;
+var Orders = mongoose.model('Orders' , orders);
+exports.orders = Orders;
 
-/************   End AdminLogin model    ***************/
+/************   End Order model    ***************/
+
+/************ start Review model   ***************/
+
+var review = new Schema({
+	Name : String,
+	Email : String,
+	City_Id : Schema.ObjectId,
+	Restaurant_Id : Schema.ObjectId,
+	Description : String,
+	Vote : Number
+})
+
+var Review = mongoose.model('Review' , review);
+exports.review = Review;
+
+/************   End Review model    ***************/
 
 /************   Start UserLogin model    ***************/
 
-var bcrypt   = require('bcrypt-nodejs');
-
-// define the schema for our user model
-var userSchema = mongoose.Schema({
+var userLogin = new Schema({
 	id           : String,
     token        : String,
     email        : String,
     name         : String
+    /* If we have to create local collection for user and also different scoial media tables, we can seperate all of them */
     // local            : {
     //     email        : String,
     //     password     : String,
@@ -154,20 +167,7 @@ var userSchema = mongoose.Schema({
 
 });
 
-// methods ======================
-// generating a hash
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
-};
-
-// create the model for users and expose it to our app
-var User = mongoose.model('User' , userSchema);
+var User = mongoose.model('User' , userLogin);
 exports.user = User;
-//module.exports = mongoose.model('User', userSchema);
 
 /************   End UserLogin model    ***************/

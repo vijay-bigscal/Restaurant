@@ -1,5 +1,20 @@
 <% include header %>
 <script type="text/javascript">
+
+	$(document).ready(function(){
+		changeCountry();
+	});
+	function changeCountry(){
+		var countryID = $("#country").val();
+		$.getJSON('/getCitiesByCountryID?CountryID=' + countryID , function(res){
+			var cities = res.result;
+			var cityList = "";
+			cities.forEach(function(data){
+				cityList += "<option value='" + data._id + "'> " + data.CityName + "</option>";
+			})
+			$("select#city").html(cityList);
+		});
+	}
 	function readURLLogo(input) {
 		if (input.files && input.files[0]) {
 	            var reader = new FileReader();
@@ -67,7 +82,7 @@
 				<div class="col-lg-2"><b>Name</b><br/><input type="text" id="resname" name="resname" required /></div>
 				<div class="col-lg-2"><b>Address</b><br/><textarea rows="2" cols="15" id="address" name="address" required ></textarea></div>
 				<div class="col-lg-2"><b>Country</b><br/>
-					<select id="country" name="country">
+					<select id="country" name="country" onchange="changeCountry()">
 						<% countries.forEach(function(data){ %>
 					    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
 					    <%  }) %>

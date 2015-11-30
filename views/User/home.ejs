@@ -1,4 +1,9 @@
 <% include header %>
+<style>
+  td{
+    padding : 5px 100px 5px 0px !important;
+  }
+</style>
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -77,7 +82,9 @@
 						$("#Ingredients").html(data.Ingredients);
 						$("#Details").html(data.Details);
 						$("#Spices").html(data.Spices);
-						$("#Price").html(data.Price);
+						$("#price").html(data.Price);
+						$("#PriceVal").val(data.Price); 
+						/* pass as hidden to get value in postOrder() */
 					}
 				})
 			});
@@ -86,77 +93,96 @@
 
 </script>
 
-<div style="align:'center';">
-	<div class="col-lg-12 col-md-12">
+<main>
+	<div class="container">
+		<div class="col-lg-12 col-md-12">
 
-	<form action="#" method="post">
-		<b>Country : </b>
-		<select id="country" name="country" onchange="changeCountry()">
-			<% countries.forEach(function(data){ %>
-		    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
-		    <%  }) %>
-		</select>
-
-		<b>City : </b>
-		<select id="city" name="city" onchange="changeCity()">
-			<% cities.forEach(function(data){ %>
-		    	<option value="<%= data._id %>"> <%= data.CityName %> </option>
-		    <%  }) %>
-		</select>
-
-		<b>Restaurant Type : </b>
-		<select id="restaurantType" name="restaurantType" onchange="changeRestaurantType()">
-			<% restaurantTypeList.forEach(function(data){ %>
-		    	<option value="<%= data._id %>"> <%= data.Type %> </option>
-		    <%  }) %>
-		</select>
-		
-		<b>Restaurant : </b>
-		<select id="restaurant" name="restaurant" onchange="changeRestaurant()">
-			<% restaurantList.forEach(function(data){ %>
-		    	<option value="<%= data._id %>"> <%= data.Name %> </option>
-		    <%  }) %>
-		</select>
-
-		<b>Dish Type : </b>
-		<select id="dishtype" name="dishtype" onchange="changeDishType()">
-			<% dishList.forEach(function(data){ %>
-		    	<option value="<%= data._id %>"> <%= data.Type %> </option>
-		    <%  }) %>
-		</select>
-
-		<b>Menu : </b>
-		<select id="menu" name="menu">
-			<% menuList.forEach(function(data){ %>
-		    	<option value="<%= data._id %>"> <%= data.DishName %> </option>
-		    <%  }) %>
-		</select><br/>
-		<div>
-			Quantity : <input type="number" name="qty" id="qty" />
+		<form action="/postOrder" method="post">
+			
+			<div class="row">
+				<div class="col-lg-2 col-md-2 col-sm-2">
+					<b>Country </b> <br/>
+					<select id="country" name="country" onchange="changeCountry()" required>
+						<% countries.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-2">
+					<b>City </b><br/>
+					<select id="city" name="city" onchange="changeCity()" required>
+						<% cities.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.CityName %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-2">
+					<b>Restaurant Type </b><br/>
+					<select id="restaurantType" name="restaurantType" onchange="changeRestaurantType()" required>
+						<% restaurantTypeList.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.Type %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-2">
+					<b>Restaurant </b><br/>
+					<select id="restaurant" name="restaurant" onchange="changeRestaurant()" required>
+						<% restaurantList.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.Name %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-2">
+					<b>Dish Type </b><br/>
+					<select id="dishtype" name="dishtype" onchange="changeDishType()" required>
+						<% dishList.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.Type %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-2">
+					<b>Menu </b><br/>
+					<select id="menu" name="menu" required>
+						<% menuList.forEach(function(data){ %>
+					    	<option value="<%= data._id %>"> <%= data.DishName %> </option>
+					    <%  }) %>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-2 col-md-2 col-sm-2">
+					<b>Quantity </b><br/>
+					<input type="number" name="qty" id="qty" required />
+				</div>
+			</div>
+			<table>
+				<input type="hidden" name="PriceVal" id="PriceVal" required/>
+				<tr>
+					<td><b>Dish Name </b></td>
+					<td id="DishName" name="DishName"></td>
+				</tr>
+				<tr>
+					<td><b>Ingredients </b></td>
+					<td id="Ingredients" name="Ingredients"></td>
+				</tr>
+				<tr>
+					<td><b>Details </b></td>
+					<td id="Details" name="Details"></td>
+				</tr>
+				<tr>
+					<td><b>Spices </b></td>
+					<td id="Spices" name="Spices"></td>
+				</tr>
+				<tr>
+					<td><b>Price </b></td>
+					<td id="price" name="price" ></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" name="btnOrder" /></td>
+				</tr>
+			</table>
+			
+		</form>
 		</div>
-		<table>
-			<tr>
-				<td>Dish Name : </td>
-				<td id="DishName"></td>
-			</tr>
-			<tr>
-				<td>Ingredients : </td>
-				<td id="Ingredients"></td>
-			</tr>
-			<tr>
-				<td>Details : </td>
-				<td id="Details" ></td>
-			</tr>
-			<tr>
-				<td>Spices : </td>
-				<td id="Spices" ></td>
-			</tr>
-			<tr>
-				<td>Price : </td>
-				<td id="Price" name="price" ></td>
-			</tr>
-		</table>
-		
-	</form>
 	</div>
-</div>
+</main>

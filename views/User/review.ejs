@@ -1,0 +1,61 @@
+<% include header %>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		changeRestaurant();
+	});
+
+	function changeRestaurant()
+	{
+		var cityID = $("#city").val();
+		$.getJSON('/getRestaurantByCityID?CityID=' + cityID, function(res){
+			var restaurants = res.result;
+			var restaurantList = "";
+			restaurants.forEach(function(data){
+				restaurantList += "<option value='" + data._id + "'> " + data.Name + "</option>";
+			})
+			$("select#restaurant").html(restaurantList);
+		});
+	}
+
+</script>
+
+<main>
+	<div class="container">
+		<form action="/postReview" method="post">
+			<table>
+				<tr>
+					<td><b>City </b></td>
+					<td>
+						<select id="city" name="city" onchange="changeRestaurant()" required>
+						<% city.forEach(function(data){ %>
+							<option value="<%= data._id %>"> <%= data.CityName %> </option>
+						<% }) %>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Restaurant </b></td>
+					<td>
+						<select id="restaurant" name="restaurant" required>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Comments </b></td>
+					<td><textarea rows="2" cols="10" name="description" id="description" required></textarea></td>
+				</tr>
+				<tr>
+					<td><b>Vote </b></td>
+					<td><input type="radio" name="vote" value="1" checked />Excellent
+						<input type="radio" name="vote" value="1" />Very Good
+						<input type="radio" name="vote" value="1" />Good
+						<input type="radio" name="vote" value="1" />Poor</td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" name="btnReview" value ="Give Review" : </td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</main>

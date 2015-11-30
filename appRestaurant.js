@@ -52,12 +52,6 @@ var userRoute = require('./routes/User/userRoute');
 */					
 
 var app = express();
-
-
-//var httpsServer = https.createServer(credentials, app);
-
-//var server = httpsServer.listen(8080); 			//node server
-
 var server = app.listen(configuration.PORT);
 
 console.log('Express server listening on port ' + configuration.PORT);
@@ -105,16 +99,17 @@ app.post('/postOrder',urlencodedParser, userRoute.postOrder);
 app.get('/getCitiesByCountryID',userRoute.getCitiesByCountryID);
 app.get('/getRestaurantByIDs',userRoute.getRestaurantByIDs);
 app.get('/getMenusByRestaurantID',userRoute.getMenusByRestaurantID);
+app.get('/getRestaurantByCityID', userRoute.getRestaurantByCityID);
+app.get('/getReview',userRoute.getReview);
+app.post('/postReview',urlencodedParser ,userRoute.postReview);
+app.get('/userLogout',userRoute.userLogout);
 
 /*-------------------  Route For Facebook Authentication And Login ------------------*/
-
-//module.exports = function(apps, passport) {
-	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-	    // handle the callback after facebook has authenticated the user
-	app.get('/auth/facebook/callback',
-	    passport.authenticate('facebook', {
-	        successRedirect : '/userHome',
-	        failureRedirect : '/getUserLogin'
-		})
-	);
-//}
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+    // handle the callback after facebook has authenticated the user
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect : '/userHome',
+        failureRedirect : '/getUserLogin'
+	})
+);
