@@ -1,9 +1,21 @@
 <% include header %>
-<div>
-	<div><a href="/getDishTypeList"> All Dish Types </a></div>
-	<form action="/insertDishType" method="post">
-		<b>Dish no : </b><input type="number" name="no" id="no" required /><br/><br/>
-		<b>Dish type : </b><input type="text" name="dishtype" id="dishtype" required /><br/><br/>
-		<input type="submit" name="btnResType" id="btnDishType" value="Save" />
-	</form>
-</div>
+<main>
+	<div class="container">
+		<div><a href="/getDishTypeList"> All Dish Types </a></div>
+		<form action="/insertDishType" method="post">
+			<table>
+				<tr>
+					<td><b>Dish no : </b></td>
+					<td><input type="number" name="no" id="no" required /></td>
+				</tr>
+				<tr>
+					<td><b>Dish type : </b></td>
+					<td><input type="text" name="dishtype" id="dishtype" required /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" name="btnResType" id="btnDishType" value="Save" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</main>

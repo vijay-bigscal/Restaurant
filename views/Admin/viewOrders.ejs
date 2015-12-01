@@ -1,0 +1,56 @@
+<% include header %>
+<main>
+	<div class="container">
+		<table>
+			<tr>
+				<th>Sr. No</th>
+				<th>Name</th>
+				<th>Country</th>
+				<th>City</th>
+				<th>Restaurant</th>
+				<th>Dish Name</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Total Price</th>
+			</tr>
+			<% var i=1;
+			Orders.forEach(function(data){ %>
+			<tr>
+				<td><%= i %></td>
+				<% i += 1; %>
+				<td><%= data.Name %></td>
+				<td>
+					<% Countries.forEach(function(country){ 
+						if(data.Country_Id.equals(country._id)){	%>
+							<%= country.CountryName %>
+					<%  } 
+					}) %>
+				</td>
+				<td>
+					<% Cities.forEach(function(city){ 
+						if(data.City_Id.equals(city._id)){	%>
+							<%= city.CityName %>
+					<%  } 
+					}) %>
+				</td>
+				<td>
+					<% Restaurants.forEach(function(restaurant){ 
+						if(data.Restaurant_Id.equals(restaurant._id)){	%>
+							<%= restaurant.Name %>
+					<%  } 
+					}) %>
+				</td>
+				<% Menus.forEach(function(menu){ 
+					if(data.Menu_Id.equals(menu._id)){	%>
+						<td><%= menu.DishName %></td>
+						<td><%= menu.Price %></td>
+						
+				<%  } 
+				}) %>
+				<td><%= data.Quantity %></td>
+				<td><%= data.TotalPrice %></td>
+			</tr>
+			<% }) %>
+		</table>
+	</div>
+</main>
