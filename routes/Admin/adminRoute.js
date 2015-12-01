@@ -21,18 +21,25 @@ var fs = require('fs');											//to import fs module
 */
 exports.getLogin = function(req , res){
 	//When first time called admin credentials are set
-	var adminLogin = ADMINLOGIN_COLLECTION({
-		Email : "admin@foodcorner.com",
-		Passwords : "admin"
-	})
-	adminLogin.save(function(err, success){
+	ADMINLOGIN_COLLECTION.findOne({}, function(err, admin){
 		if(err){
 			res.send(TRY_AGAIN);
 		}else{
-			res.redirect('/');
+			if(admin == null){
+				var adminLogin = ADMINLOGIN_COLLECTION({
+					Email : "admin@foodcorner.com",
+					Passwords : "admin"
+				})
+				adminLogin.save(function(err, success){
+					if(err){
+						res.send(TRY_AGAIN);
+					}
+				})
+			}
+			res.render('login');
 		}
-	});
-	//res.render('login');
+	})
+	
 }
 
 /*
@@ -40,7 +47,25 @@ exports.getLogin = function(req , res){
    	Purpose : To get admin login page
 */
 exports.getAdminLogin = function(req , res){
-	res.render('Admin/login', { Error : "" });
+	//When first time called admin credentials are set
+	ADMINLOGIN_COLLECTION.findOne({}, function(err, admin){
+		if(err){
+			res.send(TRY_AGAIN);
+		}else{
+			if(admin == null){
+				var adminLogin = ADMINLOGIN_COLLECTION({
+					Email : "admin@foodcorner.com",
+					Passwords : "admin"
+				})
+				adminLogin.save(function(err, success){
+					if(err){
+						res.send(TRY_AGAIN);
+					}
+				})
+			}
+			res.render('Admin/login', { Error : "" }); 
+		}
+	})
 }
 
 /*
