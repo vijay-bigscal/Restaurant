@@ -251,14 +251,15 @@ exports.insertMenu = function(req , res){
    	Method : Get
    	Purpose : To get country city form
 */
-exports.getCountryCity = function(req , res){	
+exports.getCountryCity = function(req , res){
+	var json = {};
  	COUNTRY_COLLECTION.find({}, function(err, country){
 	  	if (err) {
 		    json.status = '0';
 			json.result = TRY_AGAIN;
 			res.send(json);	
 	  	}else{
-			res.render('Admin/countryCity', { countryList : country});
+			res.render('Admin/countryCity', {countryList : country});
 		}
 	});
 }
@@ -301,3 +302,88 @@ exports.insertCity = function(req , res){
 		}
 	})
 }
+
+/*
+   	Method : Get
+   	Purpose : To get orders
+*/
+exports.getOrders = function(req , res){
+	var json = {};
+	ORDER_COLLECTION.find({}, function(err, orders){
+		if(err){
+			json.status = '0';
+			json.result = TRY_AGAIN;
+			res.send(json);
+		}else{
+			COUNTRY_COLLECTION.find({}, function(err, countries){
+				if(err){
+					json.status = '0';
+					json.result = TRY_AGAIN;
+					res.send(json);
+				}else{
+					// console.log("====================Orders : " + orders + "===================");
+					// console.log("====================Countries : " + countries + "===================");
+					CITY_COLLECTION.find({}, function(err, cities){
+						if(err){
+							json.status = '0';
+							json.result = TRY_AGAIN;
+							res.send(json);
+						}else{
+							RESTAURANT_COLLECTION.find({}, function(err, restaurants){
+								if(err){
+									json.status = '0';
+									json.result = TRY_AGAIN;
+									res.send(json);
+								}else{
+									MENU_COLLECTION.find({}, function(err, menus){
+										if(err){
+											json.status = '0';
+											json.result = TRY_AGAIN;
+											res.send(json);
+										}else{
+											res.render('Admin/viewOrders', {Orders : orders, Countries : countries, Cities : cities, Restaurants : restaurants, Menus : menus});
+										}
+									})
+								}
+							})
+						}
+					})
+				}
+			})
+		}
+	})
+}
+
+/*
+   	Method : Get
+   	Purpose : To get reviews
+*/
+exports.getReviews = function(req , res){
+	var json = {};
+	REVIEW_COLLECTION.find({}, function(err, reviews){
+		if(err){
+			json.status = '0';
+			json.result = TRY_AGAIN;
+			res.send(json);
+		}else{
+			CITY_COLLECTION.find({}, function(err, cities){
+				if(err){
+					json.status = '0';
+					json.result = TRY_AGAIN;
+					res.send(json);
+				}else{
+					RESTAURANT_COLLECTION.find({}, function(err, restaurants){
+						if(err){
+							json.status = '0';
+							json.result = TRY_AGAIN;
+							res.send(json);
+						}else{
+							res.render('Admin/viewReviews',{Reviews : reviews, Cities : cities, Restaurants : restaurants});
+						}
+					})
+				}
+			})
+		}
+	})
+}
+

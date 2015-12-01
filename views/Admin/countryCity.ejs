@@ -1,25 +1,48 @@
 <% include header %>
-<div>
-	<form action="/insertCountry" method="post">
-		<fieldset>
-			<legend>Country</legend>
-			<b> Country Name : </b>
-			<input type="text" name="countryname" id="countryname" required /><br/><br/>
-			<input type="submit" name="btnCountry" id="btnCountry" value="Save" />
-		</fieldset>
-	</form>
-	<form action="/insertCity" method="post">
-		<fieldset>
-			<legend>City</legend>
-			<b> Country : </b>
-			<select id="country" name="country">
-				<% countryList.forEach(function(data){ %>
-			    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
-			    <%  }) %>
-			</select><br/><br/>
-			<b> City Name : </b>
-			<input type="text" name="cityname" id="cityname" required /><br/><br/>
-			<input type="submit" name="btnCity" id="btnCity" value="Save" />
-		</fieldset>
-	</form>
-</div>
+<style>
+	legend{
+		color : gray;
+	}
+</style>
+<main>
+	<div class="container">
+		<form action="/insertCountry" method="post">
+			<fieldset>
+				<legend>Country</legend>
+				<table>
+					<tr>
+						<td><b> Country Name : </b></td>
+						<td><input type="text" name="countryname" id="countryname" required /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" name="btnCountry" id="btnCountry" value="Save" /></td>
+					</tr>
+				</table>
+			</fieldset>
+		</form>
+		<form action="/insertCity" method="post">
+			<fieldset>
+				<legend>City</legend>
+				<table>
+					<tr>
+						<td><b> Country : </b></td>
+						<td>
+							<select id="country" name="country">
+							<% countryList.forEach(function(data){ %>
+						    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
+						    <%  }) %>
+						    </select>
+						</td>
+					</tr>
+					<tr>
+						<td><b> City Name : </b></td>
+						<td><input type="text" name="cityname" id="cityname" required /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" name="btnCity" id="btnCity" value="Save" /></td>
+					</tr>
+				</table>
+			</fieldset>
+		</form>
+	</div>
+</main>

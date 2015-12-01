@@ -1,0 +1,51 @@
+<% include header %>
+<main>
+	<div class="container">
+		<table>
+			<tr>
+				<th>Sr. No</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>City</th>
+				<th>Restaurant</th>
+				<th>Description</th>
+				<th>Vote</th>
+			</tr>
+			<% var i=1;
+			Reviews.forEach(function(data){ %>
+			<tr>
+				<td><%= i %></td>
+				<% i += 1; %>
+				<td><%= data.Name %></td>
+				<td><%= data.Email %></td>
+				<td>
+					<% Cities.forEach(function(city){
+						if(data.City_Id.equals(city._id)){ %>
+							<%= city.CityName %>
+					<%	}
+					}) %>
+				</td>
+				<td>
+					<% Restaurants.forEach(function(restaurant){
+						if(data.Restaurant_Id.equals(restaurant._id)){ %>
+							<%= restaurant.Name %>
+					<%	}
+					}) %>
+				</td>
+				<td><%= data.Description %></td>
+				<td>
+					<% if(data.Vote == 1){ %>
+						Excellent
+					<% }else if(data.Vote == 2){ %>
+						Very Good
+					<% }else if(data.Vote == 3){ %>
+						Good
+					<% }else if(data.Vote == 4){ %>
+						Poor
+					<% } %>
+				</td>
+			</tr>
+			<% }) %>
+		</table>
+	</div>
+</main>

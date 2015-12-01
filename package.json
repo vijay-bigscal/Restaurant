@@ -9,10 +9,11 @@
   "author": "Nilam",
   "license": "ISC",
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.9.2",
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "cookie-session": "^2.0.0-alpha.1",
     "ejs": "^2.3.4",
-    "express": "^3.4.8",
+    "express": "^3.21.2",
     "http": "0.0.0",
     "https": "^1.0.0",
     "mongodb": "^2.0.49",
@@ -22,6 +23,7 @@
     "passport-facebook": "^2.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "underscore": "^1.8.3",
     "util": "^0.10.3"
   }
 }

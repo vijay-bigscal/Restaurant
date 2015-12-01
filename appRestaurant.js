@@ -92,6 +92,9 @@ app.get('/getCountryCity',adminRoute.getCountryCity);
 app.post('/insertCountry',urlencodedParser, adminRoute.insertCountry);
 app.post('/insertCity',urlencodedParser, adminRoute.insertCity);
 
+app.get('/getOrders',adminRoute.getOrders);
+app.get('/getReviews',adminRoute.getReviews);
+
 /*-------------------  User Routes Files ------------------*/
 app.get('/getUserLogin',userRoute.getUserLogin);
 app.get('/userHome',userRoute.userHome); //To get Home page
