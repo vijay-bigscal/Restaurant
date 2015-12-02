@@ -3,6 +3,7 @@
 
 	$(document).ready(function(){
 		changeCountry();
+		fillFromToDates();
 	});
 	function changeCountry(){
 		var countryID = $("#country").val();
@@ -67,6 +68,10 @@
 	    margin: 3px;
 	    padding: 3px;
 	}
+
+	td {
+		padding : 0px 0px 0px 0px !important;
+	}
 </style>
 <main>
 	<div class="container">
@@ -82,21 +87,21 @@
 				<div class="col-lg-2"><b>Name</b><br/><input type="text" id="resname" name="resname" required /></div>
 				<div class="col-lg-2"><b>Address</b><br/><textarea rows="2" cols="15" id="address" name="address" required ></textarea></div>
 				<div class="col-lg-2"><b>Country</b><br/>
-					<select id="country" name="country" onchange="changeCountry()">
+					<select id="country" name="country" onchange="changeCountry()" required>
 						<% countries.forEach(function(data){ %>
 					    	<option value="<%= data._id %>"> <%= data.CountryName %> </option>
 					    <%  }) %>
 					</select>
 				</div>
 				<div class="col-lg-2"><b>City</b><br/>
-					<select id="city" name="city">
+					<select id="city" name="city" required>
 						<% cities.forEach(function(data){ %>
 					    	<option value="<%= data._id %>"> <%= data.CityName %> </option>
 					    <%  }) %>
 					</select>
 				</div>
 				<div class="col-lg-2"><b>Restaurant Type</b><br/>
-					<select id="restaurantType" name="restaurantType">
+					<select id="restaurantType" name="restaurantType" required>
 						<% restaurantTypes.forEach(function(data){ %>
 					    	<option value="<%= data._id %>"> <%= data.Type %> </option>
 					    <%  }) %>
@@ -107,14 +112,33 @@
 			<div class="row">
 				<div class="col-lg-2"><img id="restaurantImg" src="#" alt="your image" class="item" /></div>
 				<div class="col-lg-4">
-					<b>Opening days from 9:00 AM to 11:00 PM</b><br/>
-					<input type="checkbox" name="days" value="sunday" checked />Sunday <br/>
-					<input type="checkbox" name="days" value="monday" />Monday <br/>
-					<input type="checkbox" name="days" value="tuesday" />Tuesday <br/>
-					<input type="checkbox" name="days" value="wednesday" />Wednesday <br/>
-					<input type="checkbox" name="days" value="thursday" />Thursday <br/>
-					<input type="checkbox" name="days" value="friday" />Friday <br/>
-					<input type="checkbox" name="days" value="saturday" />Saturday 
+					<b>Opening days</b><br/>
+					<table>
+						<tr>
+							<th>Days</th>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="days" value="sunday" checked />Sunday</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="days" value="monday" />Monday</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="days" value="tuesday" />Tuesday </td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="days" value="wednesday" />Wednesday </td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="days" value="thursday" />Thursday </td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="days" value="friday" />Friday </td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="days" value="saturday" />Saturday </td>
+						</tr>
+					</table>
 				</div>
 				<div class="col-lg-2">
 					<b>Phone</b>
@@ -122,6 +146,9 @@
 					<b>Call me now</b><br/>
 					<input type="radio" name="callme" value="1" checked />On <br/>
 					<input type="radio" name="callme" value="0" />Off<br/><br/>
+					<b>24 hours in a day</b><br/>
+					<input type="radio" name="hours" value="y" checked />Yes<br/>
+					<input type="radio" name="hours" value="n" />No<br/><br/>
 				</div>
 				<div class="col-lg-2"><b>Status</b><br/>
 					<input type="radio" name="status" value="1" checked />Take away <br/>

@@ -22,33 +22,34 @@
 				cityList += "<option value='" + data._id + "'> " + data.CityName + "</option>";
 			})
 			$("select#city").html(cityList);
+			changeRestaurant();
 		});
-		changeRestaurant();
-		//fillMenus();
+		
 	}
 	function changeCity(){
 		changeRestaurant();
-		//fillMenus();
 	}
 	function changeRestaurantType(){
 		changeRestaurant();
-		//fillMenus();
 	}
 	function changeRestaurant()
 	{
 		var countryID = $("#country").val();
 		var cityID = $("#city").val();
 		var restaurantTypeID = $("#restaurantType").val();
+		var hours = $("input[name=hours]:checked").val();
+		//alert("Hours : " + hours);
 		//alert("Country : " + countryID + " City : " + cityID + " restaurantType : " + restaurantTypeID);
-		$.getJSON('/getRestaurantByIDs?CountryID=' + countryID + '&CityID=' + cityID + '&RestaurantTypeID=' + restaurantTypeID, function(res){
+		$.getJSON('/getRestaurantByIDs?CountryID=' + countryID + '&CityID=' + cityID + '&RestaurantTypeID=' + restaurantTypeID + '&Hours=' + hours, function(res){
 			var restaurants = res.result;
 			var restaurantList = "";
 			restaurants.forEach(function(data){
 				restaurantList += "<option value='" + data._id + "'> " + data.Name + "</option>";
 			})
 			$("select#restaurant").html(restaurantList);
+			fillMenus();
 		});
-		fillMenus();
+		
 	}
 	function changeDishType(){
 		fillMenus();
@@ -56,6 +57,7 @@
 	function fillMenus(){
 		var restaurantID = $("#restaurant").val();
 		var dishTypeID = $("#dishtype").val();
+		//alert("Dish : " + dishTypeID + "<br/> Restaurant : " + restaurantID);
 		$.getJSON('/getMenusByRestaurantID?RestaurantID=' + restaurantID + "&DishTypeID=" + dishTypeID, function(res){
 			var menus = res.result;
 			var menuList = "";
@@ -75,7 +77,7 @@
 			$("#Ingredients").html("");
 			$("#Details").html("");
 			$("#Spices").html("");
-			$("#Price").html("");
+			$("#price").html("");
 		}else{
 			$.getJSON('/getMenusByRestaurantID?RestaurantID=' + restaurantID + "&DishTypeID=" + dishTypeID, function(res){
 				var menus = res.result;
@@ -121,16 +123,26 @@
 					</select>
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-2">
-					<b>Restaurant Type </b><br/>
+					<b>Restaurant Type</b><br/>
 					<select id="restaurantType" name="restaurantType" onchange="changeRestaurantType()" required>
 						<% restaurantTypeList.forEach(function(data){ %>
 					    	<option value="<%= data._id %>"> <%= data.Type %> </option>
 					    <%  }) %>
 					</select>
 				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4">
+					</b><b>By 24 hours</b><br/>
+					<input type="radio" name="hours" id="hours" value="y" onchange="changeRestaurant()"/>Yes  
+					<input type="radio" name="hours" id="hours" value="n" onchange="changeRestaurant()"/>No
+					<input type="radio" name="hours" id="hours" value="" onchange="changeRestaurant()" checked/>Both
+				</div>
+				
+				
+			</div>
+			<div class="row">
 				<div class="col-lg-2 col-md-2 col-sm-2">
 					<b>Restaurant </b><br/>
-					<select id="restaurant" name="restaurant" onchange="changeRestaurant()" required>
+					<select id="restaurant" name="restaurant" onchange="fillMenus()" required>
 						<% restaurantList.forEach(function(data){ %>
 					    	<option value="<%= data._id %>"> <%= data.Name %> </option>
 					    <%  }) %>

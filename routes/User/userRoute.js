@@ -182,20 +182,36 @@ exports.userLogout = function(req,res){
 */
 exports.getRestaurantByIDs = function(req,res){
 	var json = {};
-	var CountryID = req.query.CountryID;
-	var CityID = req.query.CityID;
-	var RestaurantTypeID = req.query.RestaurantTypeID;
-	RESTAURANT_COLLECTION.find({Country_Id : CountryID, City_Id : CityID, RestaurantType_Id : RestaurantTypeID} , function(err, restaurants){
-		if (err) {
-		    json.status = '0';
-			json.result = TRY_AGAIN;
-			res.send(json);	
-	  	}else{
-			json.status = '1';
-			json.result = restaurants;
-			res.send(json);
-		}
-	})
+	var data = req.query;
+	var CountryID = data.CountryID;
+	var CityID = data.CityID;
+	var RestaurantTypeID = data.RestaurantTypeID;
+	var Hours = data.Hours;
+	if(Hours != ""){
+		RESTAURANT_COLLECTION.find({Country_Id : CountryID, City_Id : CityID, RestaurantType_Id : RestaurantTypeID, "OpeningHours.Hours_24" : Hours} , function(err, restaurants){
+			if (err) {
+			    json.status = '0';
+				json.result = TRY_AGAIN;
+				res.send(json);	
+		  	}else{
+				json.status = '1';
+				json.result = restaurants;
+				res.send(json);
+			}
+		})
+	}else{
+		RESTAURANT_COLLECTION.find({Country_Id : CountryID, City_Id : CityID, RestaurantType_Id : RestaurantTypeID} , function(err, restaurants){
+			if (err) {
+			    json.status = '0';
+				json.result = TRY_AGAIN;
+				res.send(json);	
+		  	}else{
+				json.status = '1';
+				json.result = restaurants;
+				res.send(json);
+			}
+		})
+	}
 }
 
 /*

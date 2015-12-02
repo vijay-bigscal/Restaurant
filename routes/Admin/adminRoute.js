@@ -198,7 +198,7 @@ exports.insertRestaurant = function(req , res){
 		Phone : data.phone,
 		CallMeNow : data.callme,
 		Status : data.status,
-		OpeningHours : data.days,
+		OpeningHours : [{Days : data.days}, {Hours_24 : data.hours}],
 		Logo : data.logo
 	})
 	restaurant.save(function(err, success){
